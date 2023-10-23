@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Jed Rembold and Eric Roberts">
-  <title>Title</title>
+  <title>Section 07: Lists</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -30,22 +30,639 @@
   <link rel="stylesheet" href="./js/revealjs/../../css/highlight/monokai.css">
   <link rel="stylesheet" href="css/codetrace.css"/>
   <link rel="stylesheet" href="css/roberts.css"/>
+  <link rel="stylesheet" href="CreatePrimeListTrace.css"/>
 </head>
 <body>
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">Title</h1>
+  <h1 class="title">Section 07: Lists</h1>
   <p class="author">Jed Rembold and Eric Roberts</p>
-  <p class="date">Date</p>
+  <p class="date">Week of October 23rd</p>
 </section>
 
-<section id="problem-1" class="slide level2">
-<h2>Problem 1</h2>
+<section id="list-comprehensions" class="slide level2">
+<h2>List Comprehensions</h2>
 <ul>
-<li>Is here!</li>
+<li><p>The simplest syntax for a list comprehension is</p>
+<pre ><code class="mypython">[ |||expression||| |||iterator||| ]</code></pre>
+<p>where <em>expression</em> is any Python expression and
+<em>iterator</em> is a <code class="python">for</code> loop header that
+enumerates a sequence of values.</p></li>
+<li><p>The <em>iterator</em> component of the comprehension can be
+followed by any number of additional modifiers, each of which is the
+header line for either:</p>
+<ul>
+<li>another <code class="python">for</code> loop statement to specify a
+nested loop</li>
+<li>or an <code class="python">if</code> statement to only select
+certain values.</li>
 </ul>
+<pre ><code class="mypython">[ i for i in range(limit) if is_prime(i) ]</code></pre></li>
+</ul>
+</section>
+<section id="problem-1-reading-list-comprehensions"
+class="slide level2">
+<h2>Problem 1 – Reading List Comprehensions</h2>
+<p>What are values of the following Python expressions?</p>
+<div>
+<ul>
+<li
+class="fragment"><code class="mypython">[ d for d in range(10) ]</code></li>
+<li
+class="fragment"><code class="mypython">[ x ** 2 for x in range(10) ]</code></li>
+<li
+class="fragment"><code class="mypython">[ chr(ord("A") + i) for i in range(5) ]</code></li>
+<li
+class="fragment"><code class="mypython">[ w for w in ENGLISH_WORDS if len(w) == 1 ]</code></li>
+</ul>
+</div>
+<!--
+```{.mypython data-line-numbers=2}
+>>> [d for d in range(10)]
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+-->
+</section>
+<section id="problem-1-writing-list-comprehensions"
+class="slide level2">
+<h2>Problem 1 – Writing List Comprehensions</h2>
+<p>How would you express the following values using a list
+comprehension?</p>
+<ul>
+<li><code class="mypython">[ "0", "1", "2", "3", "4", "5", "6", "7" ]</code></li>
+<li><code class="mypython">[ 1, 10, 100, 1000, 10000, 100000 ]</code></li>
+<li>The total number of English palindromes (where a word is the same
+forward and backwards)</li>
+</ul>
+</section>
+<section id="problem-2" class="slide level2">
+<h2>Problem 2</h2>
+<ul>
+<li>Each of the films in <em>The Matrix</em> series (including the most
+recent <em>The Matrix: Resurrections</em> from 2021) opens with an
+iconic title sequence in which green characters appear in columns down
+the screen, like this:</li>
+</ul>
+<p><video data-src="./video/MatrixTitlesShort.mov" style="width:50.0%"
+controls=""><a
+href="./video/MatrixTitlesShort.mov">Video</a></video></p>
+</section>
+<section id="simulating-matrix-titles" class="slide level2">
+<h2>Simulating Matrix Titles</h2>
+<p>To recreate such an effect in PGL, you have simply to:</p>
+<ul>
+<li>Create a <code class="python">GWindow</code></li>
+<li>Add a black <code class="python">GRect</code> as a background</li>
+<li>Initialize a list to tabulate how many characters have been added in
+each column</li>
+<li>On each time step:
+<ul>
+<li>Pick a number between 12448 (<code class="python">0x30A0</code>) and
+12543 (<code class="python">0x30FF</code>), the unicode block of
+katakana characters</li>
+<li>Use <code class="python">chr</code> to actually create a katakana
+character</li>
+<li>Create a <code class="python">GLabel</code> with that character</li>
+<li>Add the <code class="python">GLabel</code> to the bottom of a
+randomly chosen column, where you can track where the “bottom” is at
+from your earlier list</li>
+</ul></li>
+<li>Stop when one column fills</li>
+</ul>
+</section>
+<section id="the-matrix-solutions" class="slide level2">
+<h2>The Matrix: Solutions</h2>
+<pre ><code class="mypython" style="max-height:850px; font-size: .75em;">from pgl import GWindow, GLabel, GRect
+from random import randrange
+
+# Constants
+
+GWINDOW_WIDTH = 1000
+GWINDOW_HEIGHT = 500
+N_COLUMNS = 50
+TIME_STEP = 10
+LABEL_FONT = "14px 'Sans-Serif'"
+LABEL_COLOR = "#66CC66"
+KATAKANA_START = 0x30A0
+KATAKANA_END = 0x3100
+CHARS_PER_TIME_STEP = 4
+
+# Derived constant
+
+COLUMN_WIDTH = GWINDOW_WIDTH / N_COLUMNS
+
+def matrix_titles():
+
+    def step():
+        for i in range(CHARS_PER_TIME_STEP):
+            col = randrange(0, N_COLUMNS)
+            counts[col] += 1
+            label = GLabel(chr(randrange(KATAKANA_START, KATAKANA_END)))
+            label.set_font(LABEL_FONT)
+            label.set_color(LABEL_COLOR)
+            x = (col + 0.5) * COLUMN_WIDTH - label.get_width() / 2
+            y = counts[col] * label.get_height()
+            if y >= GWINDOW_HEIGHT:
+                timer.stop()
+            else:
+                gw.add(label, x, y)
+
+    gw = GWindow(GWINDOW_WIDTH, GWINDOW_HEIGHT)
+    bg = GRect(GWINDOW_WIDTH, GWINDOW_HEIGHT)
+    bg.set_filled(True)
+    bg.set_color("Black")
+    gw.add(bg)
+    counts = [ 0 ] * N_COLUMNS
+    timer = gw.set_interval(step, TIME_STEP)
+
+# Startup code
+
+if __name__ == "__main__":
+    matrix_titles()</code></pre>
+</section>
+<section id="problem-3" class="slide level2">
+<h2>Problem 3</h2>
+<ul>
+<li>In this problem, your job is to implement an algorithm called the
+<em>Sieve of Eratosthenes</em> after the 3rd century BCE astronomer who
+invented it. This algorithm generates a list of <em>prime numbers</em>,
+which are integers greater than 1 that have no divisors except
+themselves and 1.</li>
+<li>The Sieve of Eratosthenes requires the following steps, illustrated
+here for the integers between 2 and 19:
+<ul>
+<li class="fragment" data-fragment-index="0">
+List the integers starting with 2
+</li>
+<li class="fragment" data-fragment-index="1">
+Circle the first unmarked number in the list
+</li>
+<li class="fragment" data-fragment-index="2">
+Cross out all multiples of that number
+</li>
+<li class="fragment" data-fragment-index="3">
+Repeat from step 2 until no more unmarked numbers
+</li>
+<li class="fragment" data-fragment-index="11">
+The prime numbers are the circled values
+</li>
+</ul></li>
+</ul>
+<p><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="348.85486mm"
+   height="16.803474mm"
+   viewBox="0 0 348.85485 16.803475"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="sieve.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#3f3f3f"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.35188692"
+     inkscape:cx="875.28117"
+     inkscape:cy="-278.49855"
+     inkscape:window-width="1680"
+     inkscape:window-height="1020"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-261.99608,-102.79162)">
+    <g
+       id="g18"
+       class="fragment fade-in"
+       data-fragment-index="0"
+       transform="matrix(2.3327721,0,0,2.3327721,-349.18107,-78.173647)">
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="264.05463"
+         y="82.758148"
+         id="text1"><tspan
+           sodipodi:role="line"
+           id="tspan1"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="264.05463"
+           y="82.758148">2</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="270.84048"
+         y="82.758148"
+         id="text2"><tspan
+           sodipodi:role="line"
+           id="tspan2"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="270.84048"
+           y="82.758148">3</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="277.48703"
+         y="82.758148"
+         id="text3"><tspan
+           sodipodi:role="line"
+           id="tspan3"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="277.48703"
+           y="82.758148">4</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="284.28049"
+         y="82.758148"
+         id="text4"><tspan
+           sodipodi:role="line"
+           id="tspan4"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="284.28049"
+           y="82.758148">5</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="290.9549"
+         y="82.758148"
+         id="text5"><tspan
+           sodipodi:role="line"
+           id="tspan5"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="290.9549"
+           y="82.758148">6</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="297.604"
+         y="82.758148"
+         id="text6"><tspan
+           sodipodi:role="line"
+           id="tspan6"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="297.604"
+           y="82.758148">7</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="304.27335"
+         y="82.758148"
+         id="text7"><tspan
+           sodipodi:role="line"
+           id="tspan7"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="304.27335"
+           y="82.758148">8</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="311.06427"
+         y="82.758148"
+         id="text8"><tspan
+           sodipodi:role="line"
+           id="tspan8"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="311.06427"
+           y="82.758148">9</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="317.74881"
+         y="82.758148"
+         id="text9"><tspan
+           sodipodi:role="line"
+           id="tspan9"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="317.74881"
+           y="82.758148">10</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="327.47015"
+         y="82.758148"
+         id="text10"><tspan
+           sodipodi:role="line"
+           id="tspan10"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="327.47015"
+           y="82.758148">11</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="337.19403"
+         y="82.758148"
+         id="text11"><tspan
+           sodipodi:role="line"
+           id="tspan11"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="337.19403"
+           y="82.758148">12</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="346.81659"
+         y="82.758148"
+         id="text12"><tspan
+           sodipodi:role="line"
+           id="tspan12"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="346.81659"
+           y="82.758148">13</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="356.43408"
+         y="82.758148"
+         id="text13"><tspan
+           sodipodi:role="line"
+           id="tspan13"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="356.43408"
+           y="82.758148">14</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="366.17062"
+         y="82.758148"
+         id="text14"><tspan
+           sodipodi:role="line"
+           id="tspan14"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="366.17062"
+           y="82.758148">15</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="375.84381"
+         y="82.758148"
+         id="text15"><tspan
+           sodipodi:role="line"
+           id="tspan15"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="375.84381"
+           y="82.758148">16</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="385.58289"
+         y="82.758148"
+         id="text16"><tspan
+           sodipodi:role="line"
+           id="tspan16"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="385.58289"
+           y="82.758148">17</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="395.21304"
+         y="82.758148"
+         id="text17"><tspan
+           sodipodi:role="line"
+           id="tspan17"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="395.21304"
+           y="82.758148">18</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:4.9389px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code, Bold';fill:#f8f8f2;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
+         x="404.96985"
+         y="82.758148"
+         id="text18"><tspan
+           sodipodi:role="line"
+           id="tspan18"
+           style="fill:#f8f8f2;stroke-width:1"
+           x="404.96985"
+           y="82.758148">19</tspan></text>
+    </g>
+    <circle
+       style="fill:none;stroke:#f92672;stroke-width:1.16639;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="circle20"
+       cx="270.29025"
+       cy="66.949089"
+       r="7.7109756" />
+    <path
+       id="path20"
+       style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       d="m 284.62344,72.252119 11.76652,-11.766521 m -11.00947,-0.187135 11.29634,11.296316" />
+    <circle
+       style="fill:none;stroke:#f92672;stroke-width:1.16639;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="path18"
+       cx="270.29025"
+       cy="111.0913"
+       r="7.7109756"
+       class="fragment fade-in"
+       data-fragment-index="1" />
+    <g
+       id="g28"
+       class="fragment fade-in"
+       data-fragment-index="2">
+      <path
+         id="path21"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="m 295.10086,117.2073 11.76652,-11.76652 m -11.00947,-0.18713 11.29634,11.29631" />
+      <path
+         id="path22"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="m 327.1535,117.2073 11.76652,-11.76652 m -11.00947,-0.18713 11.29634,11.29631" />
+      <path
+         id="path23"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="m 357.4652,117.2073 11.76652,-11.76652 m -11.00947,-0.18713 11.29634,11.29631" />
+      <path
+         id="path24"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="m 393.24543,117.2073 11.76652,-11.76652 m -11.00947,-0.18713 11.29634,11.29631" />
+      <path
+         id="path25"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="m 438.53017,117.2073 11.76652,-11.76652 m -11.00947,-0.18713 11.29634,11.29631" />
+      <path
+         id="path26"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="m 482.51356,117.2073 11.76652,-11.76652 m -11.00947,-0.18713 11.29634,11.29631" />
+      <path
+         id="path27"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="m 528.26383,117.2073 11.76652,-11.76652 m -11.00947,-0.18713 11.29634,11.29631" />
+      <path
+         id="path28"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="m 574.08493,117.2073 11.76652,-11.76652 m -11.00947,-0.18713 11.29634,11.29631" />
+    </g>
+    <circle
+       style="fill:none;stroke:#f92672;stroke-width:1.16639;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="circle28"
+       cx="285.80365"
+       cy="111.30093"
+       r="7.7109756"
+       class="fragment fade-in"
+       data-fragment-index="3" />
+    <g
+       id="g30"
+       transform="translate(0,15.615368)"
+       class="fragment fade-in"
+       data-fragment-index="4">
+      <path
+         id="path29"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="m 373.84439,101.31121 11.76652,-11.76652 m -11.00947,-0.187135 11.29634,11.296315" />
+      <path
+         id="path30"
+         style="fill:none;stroke:#f92672;stroke-width:1.16638;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+         d="M 505.60628,101.31121 517.3728,89.54469 m -11.00947,-0.187135 11.29634,11.296315" />
+    </g>
+    <circle
+       style="fill:none;stroke:#f92672;stroke-width:1.16639;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="circle30"
+       cx="317.4472"
+       cy="111.08579"
+       r="7.7109756"
+       class="fragment fade-in"
+       data-fragment-index="5" />
+    <circle
+       style="fill:none;stroke:#f92672;stroke-width:1.16639;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="circle31"
+       cx="348.35516"
+       cy="111.15128"
+       r="7.7109756"
+       class="fragment fade-in"
+       data-fragment-index="6" />
+    <circle
+       style="fill:none;stroke:#f92672;stroke-width:1.16639;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="circle32"
+       cx="421.64517"
+       cy="111.15128"
+       r="7.7109756"
+       class="fragment fade-in"
+       data-fragment-index="7" />
+    <circle
+       style="fill:none;stroke:#f92672;stroke-width:1.16639;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="circle33"
+       cx="466.76898"
+       cy="111.15128"
+       r="7.7109756"
+       class="fragment fade-in"
+       data-fragment-index="8" />
+    <circle
+       style="fill:none;stroke:#f92672;stroke-width:1.16639;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="circle34"
+       cx="557.64569"
+       cy="111.15128"
+       r="7.7109756"
+       class="fragment fade-in"
+       data-fragment-index="9" />
+    <circle
+       style="fill:none;stroke:#f92672;stroke-width:1.16639;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="circle35"
+       cx="602.55676"
+       cy="111.15128"
+       r="7.7109756"
+       class="fragment fade-in"
+       data-fragment-index="10" />
+  </g>
+</svg>
+</p>
+</section>
+<section id="primes-solved" class="slide level2">
+<h2>Primes Solved</h2>
+<pre ><code class="mypython" style="max-height:850px; font-size:.8em"># Implementation notes: create_prime_list
+# ---------------------------------------
+# This function creates a list of primes less than limit using an
+# algorithm called the Sieve of Eratosthenes, which dates from the
+# 3rd century BCE.  The algorithm begins by creating a string array
+# whose indices are the integers starting at 0 and extending up to
+# but not including limit.  The values in the array indicate
+# whether the number corresponding to that index is prime ("P"),
+# composite ("C"), or unresolved ("?").  The algorithm looks at
+# every value in the array starting at 2 and, if unresolved, marks
+# it as a prime and then marks all its multiples as composites.
+# At the end, every index for which the element is "P" is a prime.
+
+def create_prime_list(limit):
+    """Returns a list of all primes less than limit."""
+    array = [ "?" ] * limit
+    for n in range(2, limit):
+        if array[n] == "?":
+            array[n] = "P"
+            for k in range(2 * n, limit, n):
+                array[k] = "C"
+    return [ i for i in range(limit) if array[i] == "P" ]
+
+# Startup code
+
+if __name__ == "__main__":
+    print(create_prime_list(20))</code></pre>
+</section>
+<section id="tracing-the-sieve" class="slide level2"
+data-state="CreatePrimeListTrace">
+<h2 data-state="CreatePrimeListTrace">Tracing the Sieve</h2>
+<table id="CreatePrimeListTable">
+<tbody style="border:none;">
+<tr>
+<td>
+<div id="CreatePrimeListTrace" style="margin:0px;">
+
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div id="CreatePrimeListBanner" style="margin:0px; padding:0px;">
+Console
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div id="CreatePrimeListConsole">
+
+</div>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<table class="CTControlStrip">
+<tbody>
+<tr>
+<td>
+<img id=CreatePrimeListTraceStepInButton
+     class="CTButton"
+     src="images/StepInControl.png"
+     alt="StepInButton" />
+</td>
+<td>
+<img id=CreatePrimeListTraceResetButton
+     class="CTButton"
+     src="images/ResetControl.png"
+     alt="ResetButton" />
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</table>
 </section>
     </div>
   </div>
@@ -64,9 +681,15 @@
   <!--<script src="./js/revealjs/../other_plugins/reveald3/reveald3.js"></script>,-->
   <script src="./js/revealjs/plugin/math/math.js"></script>
   <script src="./js/revealjs/plugin/highlight/highlight.js"></script>
+  <script src="./js/revealjs/../python_language.js"></script>
+
+  // Font Awesome Characters
+  <script src="https://kit.fontawesome.com/4bc05635b0.js" crossorigin="anonymous"></script>
 
   // Code Tracing
   <script src="./js/revealjs/../codetrace.js"></script>
+
+  <script src="CreatePrimeListTrace.js"></script>
 
   <script>
 
@@ -176,6 +799,11 @@
 		  <!--},-->
 		  CommonHTML: {scale: 80},
 		},
+          highlight: {
+            beforeHighlight: hljs => hljs.registerLanguage("mypython", function(hljs) {
+              console.log(mypythondef);
+              return mypythondef(hljs); } )
+          },
         // reveal.js plugins
         plugins: [
 		  RevealMath,
@@ -213,6 +841,19 @@
             // { src: "./js/revealjs/plugin/title-footer/title-footer.js", async: true, callback: function() { title_footer.initialize({css:"./js/revealjs/plugin/title-footer/title-footer.css"}); } },
 		],
       });
+  Reveal.addEventListener("CreatePrimeListTrace", CreatePrimeListDemo);
     </script>
+  <script>
+  // This is admitedly a very hacky way to achieve my pseudo code highlighting, but it works?
+    function remove_bars() {
+      var pseudoBlocks = document.getElementsByClassName("hljs-pseudo");
+      console.log(pseudoBlocks);
+      for ( var i = 0; i < pseudoBlocks.length; i++) {
+        pseudoBlocks[i].innerHTML = pseudoBlocks[i].innerHTML.replaceAll("\|\|\|", "");
+      }
+      }
+    // omg this is even more hacky now, but I need this to run after hljs has done its thing
+    setTimeout(remove_bars, 100);
+  </script>
     </body>
 </html>

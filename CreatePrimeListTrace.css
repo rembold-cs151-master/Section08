@@ -1,0 +1,62 @@
+#CreatePrimeListTable {
+    margin: auto;
+    border-collapse: collapse;
+    padding: 0px;
+    border-spacing: 0px;
+}
+
+.reveal #CreatePrimeListTable > tbody > tr > td {
+    padding: 0px;
+}
+
+#CreatePrimeListTable #CreatePrimeListTrace .CodeTrace {
+    width: 1700px;
+    height: 650px;
+    padding-right: 5px;
+    margin-top: 0em;
+    font-size: 0.75em;
+    margin-bottom: 0.7em;
+}
+
+#CreatePrimeListTable #CreatePrimeListBanner {
+    width: 1705px;
+    height: 1.6em;
+    vertical-align: middle;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    border-top-right-radius: 13px;
+    border-top-left-radius: 13px;
+    background-color: #DDDDDD;
+    color: black;
+    border: none;
+    font: bold 0.65em 'Lucida Grande',sans-serif;
+    text-align: center;
+}
+
+#CreatePrimeListConsole {
+    width: 1700px;
+    height: 100px;
+    background-color: white;
+    margin: 0px;
+    overflow: hidden;
+    font: 0.65em 'Menlo','Courier New','Courier',monospace;
+    color: black;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.reveal #CreatePrimeListTable .CTControlStrip {
+    margin-top: 0.4em;
+}
+
+.reveal #CreatePrimeListBanner {
+    margin-top: 1em;
+}
+
+.reveal #CreatePrimeListTable .CTArrayElement {
+    padding: 0px;
+    width: 120px;
+    height: 60px;
+}
