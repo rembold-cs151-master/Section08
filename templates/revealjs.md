@@ -100,7 +100,7 @@ $if(mathjax)$
   <script src="$revealjs-url$/plugin/math/math.js"></script>
 $endif$
 $if(highlightjs)$
-  <script src="$revealjs-url$/plugin/highlight/highlight.js"></script>
+  <script src="$revealjs-url$/../highlight.js"></script>
   <script src="$revealjs-url$/../python_language.js"></script>
 $endif$
 

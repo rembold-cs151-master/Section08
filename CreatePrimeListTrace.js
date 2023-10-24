@@ -137,9 +137,9 @@ class CreatePrimeList extends CTFunction {
 }
 
 CreatePrimeList.HTML =
-    "<span class='keyword'>def</span> " +
-         "create<span class='u'>_</span>prime<span class='u'>_</span>list" +
-         "(limit):\n" +
+    "<span class='skeyword'>def</span> " +
+    "<span class='funcname'>create<span class='u'>_</span>prime<span class='u'>_</span>list</span>" +
+    "(<span class='params'>limit</span>):\n" +
     "    <span class='#1'>array = [ <span class='strlit'>\"?\"</span> ] * " +
          "limit</span>\n" +
     "    <span class='#2'><span class='keyword'>for</span> " +

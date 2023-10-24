@@ -69,13 +69,29 @@ class="slide level2">
 <div>
 <ul>
 <li
-class="fragment"><code class="mypython">[ d for d in range(10) ]</code></li>
+class="fragment"><code class="python">[ d for d in range(10) ]</code>
+<ul>
+<li class="fragment">Solution:
+<code class="python">[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]</code></li>
+</ul></li>
 <li
-class="fragment"><code class="mypython">[ x ** 2 for x in range(10) ]</code></li>
+class="fragment"><code class="python">[ x ** 2 for x in range(10) ]</code>
+<ul>
+<li class="fragment">Solution:
+<code class="python">[ 0, 1, 4, 9, 16, 25, 36, 59, 64, 81 ]</code></li>
+</ul></li>
 <li
-class="fragment"><code class="mypython">[ chr(ord("A") + i) for i in range(5) ]</code></li>
+class="fragment"><code class="python">[ chr(ord("A") + i) for i in range(5) ]</code>
+<ul>
+<li class="fragment">Solution:
+<code class="python">[ "A", "B", "C", "D", "E" ]</code></li>
+</ul></li>
 <li
-class="fragment"><code class="mypython">[ w for w in ENGLISH_WORDS if len(w) == 1 ]</code></li>
+class="fragment"><code class="python">[ w for w in ENGLISH_WORDS if len(w) == 1 ]</code>
+<ul>
+<li class="fragment">Solution:
+<code class="python">[ "a", "i", "o"]</code></li>
+</ul></li>
 </ul>
 </div>
 <!--
@@ -90,12 +106,28 @@ class="slide level2">
 <h2>Problem 1 – Writing List Comprehensions</h2>
 <p>How would you express the following values using a list
 comprehension?</p>
+<div>
 <ul>
-<li><code class="mypython">[ "0", "1", "2", "3", "4", "5", "6", "7" ]</code></li>
-<li><code class="mypython">[ 1, 10, 100, 1000, 10000, 100000 ]</code></li>
-<li>The total number of English palindromes (where a word is the same
-forward and backwards)</li>
+<li
+class="fragment"><code class="mypython">[ "0", "1", "2", "3", "4", "5", "6", "7" ]</code>
+<ul>
+<li class="fragment">Solution:
+<code class="python">[ str(i) for i in range(8) ]</code></li>
+</ul></li>
+<li
+class="fragment"><code class="mypython">[ 1, 10, 100, 1000, 10000, 100000 ]</code>
+<ul>
+<li class="fragment">Solution:
+<code class="python">[ 10 ** x for x in range(6) ]</code></li>
+</ul></li>
+<li class="fragment">The total number of English palindromes (where a
+word is the same forward and backwards)
+<ul>
+<li class="fragment">Solution:
+<code class="python">len([ w for w in ENGLISH_WORDS if w == w[::-1] ])</code></li>
+</ul></li>
 </ul>
+</div>
 </section>
 <section id="problem-2" class="slide level2">
 <h2>Problem 2</h2>
@@ -111,26 +143,31 @@ href="./video/MatrixTitlesShort.mov">Video</a></video></p>
 </section>
 <section id="simulating-matrix-titles" class="slide level2">
 <h2>Simulating Matrix Titles</h2>
+<div style="font-size:.9em">
 <p>To recreate such an effect in PGL, you have simply to:</p>
 <ul>
-<li>Create a <code class="python">GWindow</code></li>
-<li>Add a black <code class="python">GRect</code> as a background</li>
-<li>Initialize a list to tabulate how many characters have been added in
-each column</li>
-<li>On each time step:
+<li class="fragment">Create a <code class="python">GWindow</code></li>
+<li class="fragment">Add a black <code class="python">GRect</code> as a
+background</li>
+<li class="fragment">Initialize a list to tabulate how many characters
+have been added in each column</li>
+<li class="fragment">On each time step:
 <ul>
-<li>Pick a number between 12448 (<code class="python">0x30A0</code>) and
-12543 (<code class="python">0x30FF</code>), the unicode block of
-katakana characters</li>
-<li>Use <code class="python">chr</code> to actually create a katakana
-character</li>
-<li>Create a <code class="python">GLabel</code> with that character</li>
-<li>Add the <code class="python">GLabel</code> to the bottom of a
-randomly chosen column, where you can track where the “bottom” is at
-from your earlier list</li>
+<li class="fragment">Pick a number between 12448
+(<code class="python">0x30A0</code>) and 12543
+(<code class="python">0x30FF</code>), the unicode block of katakana
+characters</li>
+<li class="fragment">Use <code class="python">chr</code> to actually
+create a katakana character</li>
+<li class="fragment">Create a <code class="python">GLabel</code> with
+that character</li>
+<li class="fragment">Add the <code class="python">GLabel</code> to the
+bottom of a randomly chosen column, where you can track where the
+“bottom” is at from your earlier list</li>
 </ul></li>
-<li>Stop when one column fills</li>
+<li class="fragment">Stop when one column fills</li>
 </ul>
+</div>
 </section>
 <section id="the-matrix-solutions" class="slide level2">
 <h2>The Matrix: Solutions</h2>
@@ -138,7 +175,6 @@ from your earlier list</li>
 from random import randrange
 
 # Constants
-
 GWINDOW_WIDTH = 1000
 GWINDOW_HEIGHT = 500
 N_COLUMNS = 50
@@ -147,27 +183,24 @@ LABEL_FONT = "14px 'Sans-Serif'"
 LABEL_COLOR = "#66CC66"
 KATAKANA_START = 0x30A0
 KATAKANA_END = 0x3100
-CHARS_PER_TIME_STEP = 4
 
 # Derived constant
-
 COLUMN_WIDTH = GWINDOW_WIDTH / N_COLUMNS
 
 def matrix_titles():
 
     def step():
-        for i in range(CHARS_PER_TIME_STEP):
-            col = randrange(0, N_COLUMNS)
-            counts[col] += 1
-            label = GLabel(chr(randrange(KATAKANA_START, KATAKANA_END)))
-            label.set_font(LABEL_FONT)
-            label.set_color(LABEL_COLOR)
-            x = (col + 0.5) * COLUMN_WIDTH - label.get_width() / 2
-            y = counts[col] * label.get_height()
-            if y >= GWINDOW_HEIGHT:
-                timer.stop()
-            else:
-                gw.add(label, x, y)
+        col = randrange(0, N_COLUMNS)
+        counts[col] += 1
+        label = GLabel(chr(randrange(KATAKANA_START, KATAKANA_END)))
+        label.set_font(LABEL_FONT)
+        label.set_color(LABEL_COLOR)
+        x = (col + 0.5) * COLUMN_WIDTH - label.get_width() / 2
+        y = counts[col] * label.get_height()
+        if y >= GWINDOW_HEIGHT:
+            timer.stop()
+        else:
+            gw.add(label, x, y)
 
     gw = GWindow(GWINDOW_WIDTH, GWINDOW_HEIGHT)
     bg = GRect(GWINDOW_WIDTH, GWINDOW_HEIGHT)
@@ -586,19 +619,7 @@ The prime numbers are the circled values
 </section>
 <section id="primes-solved" class="slide level2">
 <h2>Primes Solved</h2>
-<pre ><code class="mypython" style="max-height:850px; font-size:.8em"># Implementation notes: create_prime_list
-# ---------------------------------------
-# This function creates a list of primes less than limit using an
-# algorithm called the Sieve of Eratosthenes, which dates from the
-# 3rd century BCE.  The algorithm begins by creating a string array
-# whose indices are the integers starting at 0 and extending up to
-# but not including limit.  The values in the array indicate
-# whether the number corresponding to that index is prime ("P"),
-# composite ("C"), or unresolved ("?").  The algorithm looks at
-# every value in the array starting at 2 and, if unresolved, marks
-# it as a prime and then marks all its multiples as composites.
-# At the end, every index for which the element is "P" is a prime.
-
+<pre ><code class="mypython" style="max-height:850px; font-size:.8em">
 def create_prime_list(limit):
     """Returns a list of all primes less than limit."""
     array = [ "?" ] * limit
@@ -680,7 +701,7 @@ Console
   <!--<script src="./js/revealjs/../plugins/menu/menu.js"></script>-->
   <!--<script src="./js/revealjs/../other_plugins/reveald3/reveald3.js"></script>,-->
   <script src="./js/revealjs/plugin/math/math.js"></script>
-  <script src="./js/revealjs/plugin/highlight/highlight.js"></script>
+  <script src="./js/revealjs/../highlight.js"></script>
   <script src="./js/revealjs/../python_language.js"></script>
 
   // Font Awesome Characters
