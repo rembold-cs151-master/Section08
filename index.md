@@ -1,5 +1,5 @@
 ---
-title: "Section 07: Lists"
+title: "Section 08: Lists"
 author: Jed Rembold and Eric Roberts
 date: "Week of October 23rd"
 slideNumber: true
