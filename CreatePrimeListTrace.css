@@ -15,12 +15,12 @@
     padding-right: 5px;
     margin-top: 0em;
     font-size: 0.75em;
-    margin-bottom: 0.7em;
+    /*margin-bottom: 0.7em;*/
 }
 
 #CreatePrimeListTable #CreatePrimeListBanner {
     width: 1705px;
-    height: 1.6em;
+    height: 1.2em;
     vertical-align: middle;
     margin: 0px;
     padding: 0px;

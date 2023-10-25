@@ -14,6 +14,7 @@ css:
   - CreatePrimeListTrace.css
 tracejs:
   - CreatePrimeList
+content_url: https://github.com/rembold-cs151-master/Section08
 ---
 
 
@@ -182,12 +183,14 @@ if __name__ == "__main__":
 <img id=CreatePrimeListTraceStepInButton
      class="CTButton"
      src="images/StepInControl.png"
+     style="width:100px"
      alt="StepInButton" />
 </td>
 <td>
 <img id=CreatePrimeListTraceResetButton
      class="CTButton"
      src="images/ResetControl.png"
+     style="width:100px"
      alt="ResetButton" />
 </td>
 </tr>
