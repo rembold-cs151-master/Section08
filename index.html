@@ -36,7 +36,7 @@
 <section id="title-slide">
   <h1 class="title">Section 08: Lists</h1>
   <p class="author">Jed Rembold and Eric Roberts</p>
-  <p class="date">Week of October 23rd</p>
+  <p class="date">Week of March 11</p>
 <div class="titlelinks">
 <a title="Template Repo" href="https://github.com/rembold-cs151-master/Section08"><i class="fa-solid fa-folder-tree"></i></a>
 <a title="Template Zip"  href="https://github.com/rembold-cs151-master/Section08/zipball/master/"><i class="fa-solid fa-file-zipper"></i></a>
@@ -68,34 +68,51 @@ certain values.</li>
 class="slide level2">
 <h2>Problem 1 – Reading List Comprehensions</h2>
 <p>What are values of the following Python expressions?</p>
-<div>
 <ul>
-<li
-class="fragment"><code class="python">[ d for d in range(10) ]</code>
-<ul>
-<li class="fragment">Solution:
-<code class="python">[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]</code></li>
-</ul></li>
-<li
-class="fragment"><code class="python">[ x ** 2 for x in range(10) ]</code>
-<ul>
-<li class="fragment">Solution:
-<code class="python">[ 0, 1, 4, 9, 16, 25, 36, 59, 64, 81 ]</code></li>
-</ul></li>
-<li
-class="fragment"><code class="python">[ chr(ord("A") + i) for i in range(5) ]</code>
-<ul>
-<li class="fragment">Solution:
-<code class="python">[ "A", "B", "C", "D", "E" ]</code></li>
-</ul></li>
-<li
-class="fragment"><code class="python">[ w for w in ENGLISH_WORDS if len(w) == 1 ]</code>
-<ul>
-<li class="fragment">Solution:
-<code class="python">[ "a", "i", "o"]</code></li>
-</ul></li>
+<li class="fragment semi-fade-out" data-fragment-index="3">
+<code class="mypython">[ d for d in range(10) ]</code>
+<ul class="fragment" data-fragment-index="1">
+<li>
+Solution: <code class="mypython">[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]</code>
+</li>
 </ul>
-</div>
+</li>
+<li class="fragment" data-fragment-index="3">
+<code class="python">[ x ** 2 for x in range(10) ]</code>
+<ul class="fragment" data-fragment-index="4">
+<li>
+Solution:
+<code class="python">[ 0, 1, 4, 9, 16, 25, 36, 59, 64, 81 ]</code>
+</li>
+</ul>
+</li>
+<li class="fragment" data-fragment-index="3">
+<code class="python">[ chr(ord("A") + i) for i in range(5) ]</code>
+<ul class="fragment">
+<li>
+Solution: <code class="python">[ "A", "B", "C", "D", "E" ]</code>
+</li>
+</ul>
+</li>
+<li class="fragment" data-fragment-index="3">
+<code class="python">[ w for w in ENGLISH_WORDS if len(w) == 1 ]</code>
+<ul class="fragment">
+<li>
+Solution: <code class="python">[ "a", "i", "o" ]</code>
+</li>
+</ul>
+</li>
+</ul>
+<!--
+- `[ d for d in range(10) ]`
+  - Solution: `[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]`
+- `[ x ** 2 for x in range(10) ]`
+  - Solution: `[ 0, 1, 4, 9, 16, 25, 36, 59, 64, 81 ]`
+- `[ chr(ord("A") + i) for i in range(5) ]`
+  - Solution: `[ "A", "B", "C", "D", "E" ]`
+- `[ w for w in ENGLISH_WORDS if len(w) == 1 ]`
+  - Solution: `[ "a", "i", "o"]`
+-->
 <!--
 ```{.mypython data-line-numbers=2}
 >>> [d for d in range(10)]
@@ -108,28 +125,42 @@ class="slide level2">
 <h2>Problem 1 – Writing List Comprehensions</h2>
 <p>How would you express the following values using a list
 comprehension?</p>
-<div>
 <ul>
-<li
-class="fragment"><code class="mypython">[ "0", "1", "2", "3", "4", "5", "6", "7" ]</code>
-<ul>
-<li class="fragment">Solution:
-<code class="python">[ str(i) for i in range(8) ]</code></li>
-</ul></li>
-<li
-class="fragment"><code class="mypython">[ 1, 10, 100, 1000, 10000, 100000 ]</code>
-<ul>
-<li class="fragment">Solution:
-<code class="python">[ 10 ** x for x in range(6) ]</code></li>
-</ul></li>
-<li class="fragment">The total number of English palindromes (where a
-word is the same forward and backwards)
-<ul>
-<li class="fragment">Solution:
-<code class="python">len([ w for w in ENGLISH_WORDS if w == w[::-1] ])</code></li>
-</ul></li>
+<li class="fragment semi-fade-out" data-fragment-index="3">
+<code class="python">[ "0", "1", "2", "3", "4", "5", "6", "7" ]</code>
+<ul class="fragment" data-fragment-index="1">
+<li>
+Solution: <code class="python">[ str(i) for i in range(8) ]</code>
+</li>
 </ul>
-</div>
+</li>
+<li class="fragment" data-fragment-index="3">
+<code class="python">[ 1, 10, 100, 1000, 10000, 100000 ]</code>
+<ul class="fragment" data-fragment-index="4">
+<li>
+Solution: <code class="python">[ 10 ** x for x in range(6) ]</code>
+</li>
+</ul>
+</li>
+<li class="fragment" data-fragment-index="3">
+The total number of English palindromes (where a word is the same
+forward and backwards)
+<ul class="fragment">
+<li>
+Solution:
+<code class="python">len([ w for w in ENGLISH_WORDS if w == w[::-1] ])</code>
+</li>
+</ul>
+</li>
+</ul>
+<!--
+- `[ "0", "1", "2", "3", "4", "5", "6", "7" ]`{.mypython}
+  - Solution: `[ str(i) for i in range(8) ]`
+- `[ 1, 10, 100, 1000, 10000, 100000 ]`{.mypython}
+  - Solution: `[ 10 ** x for x in range(6) ]`
+- The total number of English palindromes (where a word is the same forward and backwards)
+  - Solution: `len([ w for w in ENGLISH_WORDS if w == w[::-1] ])`
+-->
 </section>
 <section id="problem-2" class="slide level2">
 <h2>Problem 2</h2>
@@ -169,6 +200,14 @@ bottom of a randomly chosen column, where you can track where the
 </ul></li>
 <li class="fragment">Stop when one column fills</li>
 </ul>
+</div>
+</section>
+<section id="seeing-the-matrix" class="slide level2"
+data-state="MatrixDropTrace">
+<h2 data-state="MatrixDropTrace">Seeing the Matrix</h2>
+<div id="MatrixDropCanvas" class="CTCanvas"
+style="border: none; background-color:black; width:1600px; height:800px; margin:auto;">
+
 </div>
 </section>
 <section id="the-matrix-solutions" class="slide level2">
@@ -705,7 +744,7 @@ Console
   <!--<script src="./js/revealjs/../plugins/menu/menu.js"></script>-->
   <!--<script src="./js/revealjs/../other_plugins/reveald3/reveald3.js"></script>,-->
   <script src="./js/revealjs/plugin/math/math.js"></script>
-  <script src="./js/revealjs/../highlight.js"></script>
+  <script src="./js/revealjs/plugin/highlight/highlight.js"></script>
   <script src="./js/revealjs/../python_language.js"></script>
 
   // Font Awesome Characters
@@ -714,7 +753,10 @@ Console
   // Code Tracing
   <script src="./js/revealjs/../codetrace.js"></script>
 
+  <script src="./js/revealjs/../../js/pgl.js"></script>
+
   <script src="CreatePrimeListTrace.js"></script>
+  <script src="MatrixDropTrace.js"></script>
 
   <script>
 
@@ -867,6 +909,7 @@ Console
 		],
       });
   Reveal.addEventListener("CreatePrimeListTrace", CreatePrimeListDemo);
+  Reveal.addEventListener("MatrixDropTrace", MatrixDropDemo);
     </script>
   <script>
   // This is admitedly a very hacky way to achieve my pseudo code highlighting, but it works?

@@ -1,7 +1,7 @@
 ---
 title: "Section 08: Lists"
 author: Jed Rembold and Eric Roberts
-date: "Week of October 23rd"
+date: "Week of March 11"
 slideNumber: true
 theme: monokai
 highlightjs-theme: monokai
@@ -14,6 +14,9 @@ css:
   - CreatePrimeListTrace.css
 tracejs:
   - CreatePrimeList
+  - MatrixDrop
+extrajs:
+  - js/pgl.js
 content_url: https://github.com/rembold-cs151-master/Section08
 ---
 
@@ -34,7 +37,23 @@ content_url: https://github.com/rembold-cs151-master/Section08
 ## Problem 1 -- Reading List Comprehensions
 What are values of the following Python expressions?
 
-:::incremental
+<ul>
+<li class='fragment semi-fade-out' data-fragment-index=3>`[ d for d in range(10) ]`{.mypython}
+  <ul class='fragment' data-fragment-index=1><li>Solution: `[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]`{.mypython}</li></ul>
+</li>
+<li class='fragment' data-fragment-index=3>`[ x ** 2 for x in range(10) ]`
+  <ul class='fragment' data-fragment-index=4><li>Solution: `[ 0, 1, 4, 9, 16, 25, 36, 59, 64, 81 ]` </li></ul>
+</li>
+<li class='fragment' data-fragment-index=3>`[ chr(ord("A") + i) for i in range(5) ]`
+  <ul class='fragment'><li>Solution: `[ "A", "B", "C", "D", "E" ]` </li></ul>
+</li>
+<li class='fragment' data-fragment-index=3>`[ w for w in ENGLISH_WORDS if len(w) == 1 ]`
+  <ul class='fragment'><li>Solution: `[ "a", "i", "o" ]` </li></ul>
+</li>
+
+</ul>
+
+<!--
 - `[ d for d in range(10) ]`
   - Solution: `[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]`
 - `[ x ** 2 for x in range(10) ]`
@@ -43,7 +62,7 @@ What are values of the following Python expressions?
   - Solution: `[ "A", "B", "C", "D", "E" ]`
 - `[ w for w in ENGLISH_WORDS if len(w) == 1 ]`
   - Solution: `[ "a", "i", "o"]`
-:::
+-->
 
 <!--
 ```{.mypython data-line-numbers=2}
@@ -55,15 +74,26 @@ What are values of the following Python expressions?
 ## Problem 1 -- Writing List Comprehensions
 How would you express the following values using a list comprehension?
 
-:::incremental
+<ul>
+<li class='fragment semi-fade-out' data-fragment-index=3>`[ "0", "1", "2", "3", "4", "5", "6", "7" ]`
+  <ul class='fragment' data-fragment-index=1><li>Solution: `[ str(i) for i in range(8) ]`</li></ul>
+</li>
+<li class='fragment' data-fragment-index=3>`[ 1, 10, 100, 1000, 10000, 100000 ]`
+  <ul class='fragment' data-fragment-index=4><li>Solution: `[ 10 ** x for x in range(6) ]` </li></ul>
+</li>
+<li class='fragment' data-fragment-index=3>The total number of English palindromes (where a word is the same forward and backwards)
+  <ul class='fragment'><li>Solution: `len([ w for w in ENGLISH_WORDS if w == w[::-1] ])` </li></ul>
+</li>
+
+</ul>
+<!--
 - `[ "0", "1", "2", "3", "4", "5", "6", "7" ]`{.mypython}
   - Solution: `[ str(i) for i in range(8) ]`
 - `[ 1, 10, 100, 1000, 10000, 100000 ]`{.mypython}
   - Solution: `[ 10 ** x for x in range(6) ]`
 - The total number of English palindromes (where a word is the same forward and backwards)
   - Solution: `len([ w for w in ENGLISH_WORDS if w == w[::-1] ])`
-:::
-
+-->
 
 ## Problem 2
 - Each of the films in _The Matrix_ series (including the most recent _The Matrix: Resurrections_ from 2021) opens with an iconic title sequence in which green characters appear in columns down the screen, like this:
@@ -85,6 +115,12 @@ To recreate such an effect in PGL, you have simply to:
   - Add the `GLabel` to the bottom of a randomly chosen column, where you can track where the "bottom" is at from your earlier list
 - Stop when one column fills
 :::
+
+## Seeing the Matrix {data-state=MatrixDropTrace}
+
+<div id="MatrixDropCanvas" class="CTCanvas"
+  style="border: none; background-color:black; width:1600px; height:800px; margin:auto;"></div>
+
 
 ## The Matrix: Solutions
 ```{.mypython style='max-height:850px; font-size: .75em;'}

@@ -100,7 +100,7 @@ $if(mathjax)$
   <script src="$revealjs-url$/plugin/math/math.js"></script>
 $endif$
 $if(highlightjs)$
-  <script src="$revealjs-url$/../highlight.js"></script>
+  <script src="$revealjs-url$/plugin/highlight/highlight.js"></script>
   <script src="$revealjs-url$/../python_language.js"></script>
 $endif$
 
@@ -109,6 +109,10 @@ $endif$
 
   // Code Tracing
   <script src="$revealjs-url$/../codetrace.js"></script>
+
+$for(extrajs)$
+  <script src="$revealjs-url$/../../$extrajs$"></script>
+$endfor$
 
 $for(tracejs)$
   <script src="$tracejs$Trace.js"></script>
