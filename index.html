@@ -16,8 +16,11 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
@@ -36,7 +39,7 @@
 <section id="title-slide">
   <h1 class="title">Section 08: Lists</h1>
   <p class="author">Jed Rembold and Eric Roberts</p>
-  <p class="date">Week of March 11</p>
+  <p class="date">Week of October 21st</p>
 <div class="titlelinks">
 <a title="Template Repo" href="https://github.com/rembold-cs151-master/Section08"><i class="fa-solid fa-folder-tree"></i></a>
 <a title="Template Zip"  href="https://github.com/rembold-cs151-master/Section08/zipball/master/"><i class="fa-solid fa-file-zipper"></i></a>
@@ -48,7 +51,7 @@
 <h2>List Comprehensions</h2>
 <ul>
 <li><p>The simplest syntax for a list comprehension is</p>
-<pre ><code class="mypython">[ |||expression||| |||iterator||| ]</code></pre>
+<pre ><code class="python">[ |||expression||| |||iterator||| ]</code></pre>
 <p>where <em>expression</em> is any Python expression and
 <em>iterator</em> is a <code class="python">for</code> loop header that
 enumerates a sequence of values.</p></li>
@@ -61,7 +64,7 @@ nested loop</li>
 <li>or an <code class="python">if</code> statement to only select
 certain values.</li>
 </ul>
-<pre ><code class="mypython">[ i for i in range(limit) if is_prime(i) ]</code></pre></li>
+<pre ><code class="python">[ i for i in range(limit) if is_prime(i) ]</code></pre></li>
 </ul>
 </section>
 <section id="problem-1-reading-list-comprehensions"
@@ -70,10 +73,10 @@ class="slide level2">
 <p>What are values of the following Python expressions?</p>
 <ul>
 <li class="fragment semi-fade-out" data-fragment-index="3">
-<code class="mypython">[ d for d in range(10) ]</code>
+<code class="python">[ d for d in range(10) ]</code>
 <ul class="fragment" data-fragment-index="1">
 <li>
-Solution: <code class="mypython">[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]</code>
+Solution: <code class="python">[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]</code>
 </li>
 </ul>
 </li>
@@ -212,7 +215,7 @@ style="border: none; background-color:black; width:1600px; height:800px; margin:
 </section>
 <section id="the-matrix-solutions" class="slide level2">
 <h2>The Matrix: Solutions</h2>
-<pre ><code class="mypython" style="max-height:850px; font-size: .75em;">from pgl import GWindow, GLabel, GRect
+<pre ><code class="python" style="max-height:850px; font-size: .75em;">from pgl import GWindow, GLabel, GRect
 from random import randrange
 
 # Constants
@@ -660,7 +663,7 @@ The prime numbers are the circled values
 </section>
 <section id="primes-solved" class="slide level2">
 <h2>Primes Solved</h2>
-<pre ><code class="mypython" style="max-height:850px; font-size:.8em">
+<pre ><code class="python" style="max-height:850px; font-size:.8em">
 def create_prime_list(limit):
     """Returns a list of all primes less than limit."""
     array = [ "?" ] * limit
@@ -867,9 +870,14 @@ Console
 		  CommonHTML: {scale: 80},
 		},
           highlight: {
-            beforeHighlight: hljs => hljs.registerLanguage("mypython", function(hljs) {
+            beforeHighlight: hljs => {hljs.registerLanguage("python", function(hljs) {
               console.log(mypythondef);
-              return mypythondef(hljs); } )
+              return mypythondef(hljs); 
+            });
+              document.querySelectorAll('code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+            }
           },
         // reveal.js plugins
         plugins: [

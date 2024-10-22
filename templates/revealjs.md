@@ -384,9 +384,14 @@ $if(mathjax)$
 $endif$
 $if(highlightjs)$
           highlight: {
-            beforeHighlight: hljs => hljs.registerLanguage("mypython", function(hljs) {
+            beforeHighlight: hljs => {hljs.registerLanguage("python", function(hljs) {
               console.log(mypythondef);
-              return mypythondef(hljs); } )
+              return mypythondef(hljs); 
+            });
+              document.querySelectorAll('code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+            }
           },
 $endif$
         // reveal.js plugins
