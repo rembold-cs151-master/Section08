@@ -25,14 +25,14 @@ content_url: https://github.com/rembold-cs151-master/Section08
 
 ## List Comprehensions
 - The simplest syntax for a list comprehension is
-  ```mypython
+  ```python
   [ |||expression||| |||iterator||| ]
   ```
   where _expression_ is any Python expression and _iterator_ is a `for` loop header that enumerates a sequence of values.
 - The _iterator_ component of the comprehension can be followed by any number of additional modifiers, each of which is the header line for either:
   - another `for` loop statement to specify a nested loop
   - or an `if` statement to only select certain values.
-  ```mypython
+  ```python
   [ i for i in range(limit) if is_prime(i) ]
   ```
 
@@ -44,8 +44,8 @@ content_url: https://github.com/rembold-cs151-master/Section08
 What are values of the following Python expressions?
 
 <ul>
-<li class='fragment semi-fade-out' data-fragment-index=3>`[ d for d in range(10) ]`{.mypython}
-  <ul class='fragment' data-fragment-index=1><li>Solution: `[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]`{.mypython}</li></ul>
+<li class='fragment semi-fade-out' data-fragment-index=3>`[ d for d in range(10) ]`{.python}
+  <ul class='fragment' data-fragment-index=1><li>Solution: `[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]`{.python}</li></ul>
 </li>
 <li class='fragment' data-fragment-index=3>`[ x ** 2 for x in range(10) ]`
   <ul class='fragment' data-fragment-index=4><li>Solution: `[ 0, 1, 4, 9, 16, 25, 36, 59, 64, 81 ]` </li></ul>
@@ -129,7 +129,7 @@ To recreate such an effect in PGL, you have simply to:
 
 
 ## The Matrix: A Possible Solution
-```{.mypython style='max-height:850px; font-size: .75em;'}
+```{.python style='max-height:850px; font-size: .75em;'}
 from pgl import GWindow, GLabel, GRect
 from random import randrange
 
@@ -189,7 +189,7 @@ if __name__ == "__main__":
 ![](./images/sieve.svg)
 
 ## A Prime Solution
-```{.mypython style='max-height:850px; font-size:.8em'}
+```{.python style='max-height:850px; font-size:.8em'}
 
 def create_prime_list(limit):
     """Returns a list of all primes less than limit."""
