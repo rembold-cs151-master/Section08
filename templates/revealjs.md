@@ -96,6 +96,12 @@ $body$
   <script src="$revealjs-url$/../plugins/chalkboard/plugin.js"></script>
   <!--<script src="$revealjs-url$/../plugins/menu/menu.js"></script>-->
   <!--<script src="$revealjs-url$/../other_plugins/reveald3/reveald3.js"></script>,-->
+  <!-- Load content plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/loadcontent/plugin.js"></script>
+  <!-- Animate plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/animate/plugin.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.1.2/svg.min.js"></script>
+
 $if(mathjax)$
   <script src="$revealjs-url$/plugin/math/math.js"></script>
 $endif$
@@ -384,9 +390,16 @@ $if(mathjax)$
 $endif$
 $if(highlightjs)$
           highlight: {
-            beforeHighlight: hljs => hljs.registerLanguage("mypython", function(hljs) {
-              console.log(mypythondef);
-              return mypythondef(hljs); } )
+            beforeHighlight: hljs => {
+              hljs.registerLanguage("mypython", function(hljs) {
+                console.log(mypythondef);
+                return mypythondef(hljs); 
+              });
+
+              document.querySelectorAll('code').forEach((block) => {
+                hljs.highlightElement(block);
+              });
+            }
           },
 $endif$
         // reveal.js plugins
@@ -401,6 +414,8 @@ $endif$
           RevealSearch,
           RevealZoom,
 		  RevealChalkboard,
+          RevealLoadContent,
+          RevealAnimate,
           <!--RevealMenu,-->
           <!--Reveald3,-->
         ],

@@ -1,7 +1,7 @@
 ---
 title: "Section 08: Lists"
 author: Jed Rembold and Eric Roberts
-date: "Week of March 11"
+date: "Week of March 10th"
 slideNumber: true
 theme: monokai
 highlightjs-theme: monokai
@@ -21,6 +21,8 @@ content_url: https://github.com/rembold-cs151-master/Section08
 ---
 
 
+
+
 ## List Comprehensions
 - The simplest syntax for a list comprehension is
   ```mypython
@@ -33,6 +35,10 @@ content_url: https://github.com/rembold-cs151-master/Section08
   ```mypython
   [ i for i in range(limit) if is_prime(i) ]
   ```
+
+## Comprehending Comprehensions
+![](./images/comprehension.svg)
+
 
 ## Problem 1 -- Reading List Comprehensions
 What are values of the following Python expressions?
@@ -81,8 +87,8 @@ How would you express the following values using a list comprehension?
 <li class='fragment' data-fragment-index=3>`[ 1, 10, 100, 1000, 10000, 100000 ]`
   <ul class='fragment' data-fragment-index=4><li>Solution: `[ 10 ** x for x in range(6) ]` </li></ul>
 </li>
-<li class='fragment' data-fragment-index=3>The total number of English palindromes (where a word is the same forward and backwards)
-  <ul class='fragment'><li>Solution: `len([ w for w in ENGLISH_WORDS if w == w[::-1] ])` </li></ul>
+<li class='fragment' data-fragment-index=3>All palindromes in English words (where a word is the same forward and backwards)
+  <ul class='fragment'><li>Solution: `[ w for w in ENGLISH_WORDS if w == w[::-1] ]` </li></ul>
 </li>
 
 </ul>
@@ -122,7 +128,7 @@ To recreate such an effect in PGL, you have simply to:
   style="border: none; background-color:black; width:1600px; height:800px; margin:auto;"></div>
 
 
-## The Matrix: Solutions
+## The Matrix: A Possible Solution
 ```{.mypython style='max-height:850px; font-size: .75em;'}
 from pgl import GWindow, GLabel, GRect
 from random import randrange
@@ -182,7 +188,7 @@ if __name__ == "__main__":
 
 ![](./images/sieve.svg)
 
-## Primes Solved
+## A Prime Solution
 ```{.mypython style='max-height:850px; font-size:.8em'}
 
 def create_prime_list(limit):
