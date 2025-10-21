@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="./js/revealjs/dist/reset.css">
   <link rel="stylesheet" href="./js/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -39,7 +42,7 @@
 <section id="title-slide">
   <h1 class="title">Section 08: Lists</h1>
   <p class="author">Jed Rembold and Eric Roberts</p>
-  <p class="date">Week of March 10th</p>
+  <p class="date">Week of October 20th</p>
 <div class="titlelinks">
 <a title="Template Repo" href="https://github.com/rembold-cs151-master/Section08"><i class="fa-solid fa-folder-tree"></i></a>
 <a title="Template Zip"  href="https://github.com/rembold-cs151-master/Section08/zipball/master/"><i class="fa-solid fa-file-zipper"></i></a>
@@ -703,8 +706,8 @@ href="./video/MatrixTitlesShort.mov">Video</a></video></p>
 <li class="fragment">Create a <code class="python">GWindow</code></li>
 <li class="fragment">Add a black <code class="python">GRect</code> as a
 background</li>
-<li class="fragment">Initialize a list to tabulate how many characters
-have been added in each column</li>
+<li class="fragment">Initialize a list to tabulate/track how many
+characters have been added in each column</li>
 <li class="fragment">On each time step:
 <ul>
 <li class="fragment">Pick a number between 12448
@@ -717,9 +720,9 @@ create a katakana character</li>
 that character</li>
 <li class="fragment">Add the <code class="python">GLabel</code> to the
 bottom of a randomly chosen column, where you can track where the
-“bottom” is at from your earlier list</li>
+“bottom” is at from your earlier tabulation list</li>
 </ul></li>
-<li class="fragment">Stop when one column fills</li>
+<li class="fragment">Stop the timer when one column fills</li>
 </ul>
 </div>
 </section>

@@ -1,7 +1,7 @@
 ---
 title: "Section 08: Lists"
 author: Jed Rembold and Eric Roberts
-date: "Week of March 10th"
+date: "Week of October 20th"
 slideNumber: true
 theme: monokai
 highlightjs-theme: monokai
@@ -113,13 +113,13 @@ To recreate such an effect in PGL, you have simply to:
 
 - Create a `GWindow`
 - Add a black `GRect` as a background
-- Initialize a list to tabulate how many characters have been added in each column
+- Initialize a list to tabulate/track how many characters have been added in each column
 - On each time step:
   - Pick a number between 12448 (`0x30A0`) and 12543 (`0x30FF`), the unicode block of katakana characters
   - Use `chr` to actually create a katakana character
   - Create a `GLabel` with that character
-  - Add the `GLabel` to the bottom of a randomly chosen column, where you can track where the "bottom" is at from your earlier list
-- Stop when one column fills
+  - Add the `GLabel` to the bottom of a randomly chosen column, where you can track where the "bottom" is at from your earlier tabulation list
+- Stop the timer when one column fills
 :::
 
 ## Seeing the Matrix {data-state=MatrixDropTrace}
