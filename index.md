@@ -48,7 +48,7 @@ What are values of the following Python expressions?
   <ul class='fragment' data-fragment-index=1><li>Solution: `[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]`{.python}</li></ul>
 </li>
 <li class='fragment' data-fragment-index=3>`[ x ** 2 for x in range(10) ]`
-  <ul class='fragment' data-fragment-index=4><li>Solution: `[ 0, 1, 4, 9, 16, 25, 36, 59, 64, 81 ]` </li></ul>
+  <ul class='fragment' data-fragment-index=4><li>Solution: `[ 0, 1, 4, 9, 16, 25, 36, 49, 64, 81 ]` </li></ul>
 </li>
 <li class='fragment' data-fragment-index=3>`[ chr(ord("A") + i) for i in range(5) ]`
   <ul class='fragment'><li>Solution: `[ "A", "B", "C", "D", "E" ]` </li></ul>
