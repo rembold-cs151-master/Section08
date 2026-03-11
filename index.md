@@ -1,10 +1,10 @@
 ---
 title: "Section 08: Lists"
 author: Jed Rembold and Eric Roberts
-date: "Week of October 20th"
+date: "Week of March 9th"
 slideNumber: true
-theme: monokai
-highlightjs-theme: monokai
+theme: python_catppuccin
+highlightjs-theme: catppuccin-mocha
 width: 1920
 height: 1080
 transition: fade
@@ -224,14 +224,14 @@ if __name__ == "__main__":
 <td>
 <img id=CreatePrimeListTraceStepInButton
      class="CTButton"
-     src="images/StepInControl.png"
+     src="images/StepIn.png"
      style="width:100px"
      alt="StepInButton" />
 </td>
 <td>
 <img id=CreatePrimeListTraceResetButton
      class="CTButton"
-     src="images/ResetControl.png"
+     src="images/Reset.png"
      style="width:100px"
      alt="ResetButton" />
 </td>

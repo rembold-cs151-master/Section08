@@ -1,4 +1,21 @@
 
+/*Catppuccin Mocha Colors*/
+:root {
+  --gray1:  #11111b; /*Mantle*/
+  --gray2:  #1e1e2e; /*Base*/
+  --gray3:  #45475a; /*Surface 1*/
+  --gray4:  #6c7086; /*Overlay 0*/
+  --fg:     #cdd6f4; /*Text*/
+  --purple: #cba6f7; /*Mauve*/
+  --red:    #f38ba8; /*Red*/
+  --blue:   #89b4fa; /*Blue*/
+  --green:  #a6e3a1; /*Green*/
+  --orange: #fab387; /*Peach*/
+  --teal:   #94e2d5; /*Teal*/
+  --yellow: #f9e2af; /*Yellow*/
+}
+
+
 @font-face{
   font-family: Menlo;
   src: url("./theme/fonts/Menlo-Regular.ttf");
@@ -6,7 +23,7 @@
 
 body {
     font-size: 1.5em;
-    background: #CCFFFF;
+    background: var(--gray2);
 }
 
 code,.cc {
@@ -126,7 +143,7 @@ code,.cc {
 .CodeTrace {
     position: relative;
     /*background: white;*/
-    color: #f8f8f2;
+    color: var(--fg);
     /*border: solid 1px black;*/
     width: 600px;
     height: 400px;
@@ -139,8 +156,8 @@ code,.cc {
 
 .CTStackFrame {
     position: absolute;
-    border: double 10px #75715E;
-    background: #1B1C18;
+    border: double 10px var(--gray4);
+    background: var(--gray1);
     font-family: 'Menlo', 'Lucida Sans Typewriter', 'Andale Mono',
                  'Courier New', 'Courier', monospace;
     font-size: 0.8em;
@@ -164,13 +181,13 @@ code,.cc {
 }
 
 .CTVarContents tbody, .reveal .CTVarContents table tbody {
-    border: solid 2px #f8f8f2;
+    border: solid 2px var(--fg);
     padding: 0px;
 }
 
 .CTVarContents td, .reveal .CTVarContents table td {
     border: inherit;
-    color: #f8f8f2;
+    color: var(--fg);
     text-align: center;
     padding: 0px;
 }
@@ -191,8 +208,8 @@ code,.cc {
 }
 
 .reveal .CTArrayElement {
-    border: solid 2px #75715E;
-    background-color: #1B1C18 ;
+    border: solid 2px #313244;
+    background-color: #181825;
     text-align: center;
     vertical-align: middle;
     padding: 0px;
@@ -217,12 +234,12 @@ code,.cc {
 }
 
 .CTValueTag tbody, .reveal .CTValueTag tbody {
-    border: solid 2px #f8f8f2;
+    border: solid 2px var(--fg);
 }
 
 .CTValueTag td, .reveal .CTValueTag td {
     background: yellow;
-    color: #f8f8f2;
+    color: var(--fg);
     text-align: center;
     vertical-align: middle;
     padding: 0px;
@@ -237,40 +254,40 @@ code,.cc {
 }
 
 .prompt {
-    color: #AE81FF;
+    color: var(--purple);
 }
 
 .comment {
-    color: #75715E;
+    color: var(--gray3);
 }
 
 .keyword {
     /*color: #FD971F;*/
-    color: #F92672;
+    color: var(--red);
 }
 
 .builtin {
-    color: #AE81FF;
+    color: var(--purple);
 }
 
 .string, .strlit {
-    color: #A6E22E;
+    color: var(--green);
 }
 
 .number {
-    color: #000000;
+    color: var(--orange);
 }
 
 .error {
-    color: #FF0000;
+    color: var(--red);
 }
 
 .docstring {
-    color: #75715E;
+    color: var(--green);
 }
 
 .highlighted {
-    border: solid 4.5px #FD971F;
+    border: solid 4.5px var(--yellow);
     margin: -4.5px;
 }
 
